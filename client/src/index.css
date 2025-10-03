@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App styles */
+.btn { @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition; }
+.btn-primary { @apply bg-brand-600 text-white hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600; }
+.card { @apply bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 md:p-8 border border-gray-100 dark:border-gray-800; }
+.input { @apply block w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-brand-600 focus:ring-brand-600 px-3 py-2; }
+.label { @apply text-sm font-medium text-gray-700 dark:text-gray-300; }
+.link { @apply text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200; }
+
+/* Global spacing for sections and headings */
+@layer base {
+  section { @apply my-8; }
+  h1 { @apply mb-2; }
+  h2 { @apply mb-2; }
+}
+
+/* Moving gradient text utility */
+@layer components {
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .gradient-text-moving {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(90deg, #ffffff 0%, #fde047 25%, #34d399 55%, #60a5fa 85%);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease infinite;
+  }
+}
