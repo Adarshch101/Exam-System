@@ -22,7 +22,7 @@ export default function AdminDashboard() {
       try {
         const [st, he, u, e] = await Promise.all([
           api('/admin/stats'),
-          fetch((import.meta.env.VITE_API_URL || 'http://localhost:4001/api') + '/health').then(r => r.json()).catch(() => null),
+          fetch((import.meta.env.VITE_API_URL || 'https://exam-system-production-f1fe.up.railway.app/api') + '/health').then(r => r.json()).catch(() => null),
           api('/admin/users'),
           api('/admin/exams')
         ]);
