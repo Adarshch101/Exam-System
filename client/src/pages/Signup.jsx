@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { useAuth } from '../store/auth.js';
+import toast from 'react-hot-toast';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('student');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function Signup() {
     } catch (e) {
       console.log(e);
       console.log(e.message);
-      setError(e.message);
+      toast.error(e.message);
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ export default function Signup() {
           <div className="mb-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Join us</div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Create your account</h1>
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Join as a student, instructor, or admin.</p>
-          {error && <div className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</div>}
+          {/* {error && <div className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</div>} */}
           <form onSubmit={onSubmit} className="mt-6 grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="label">Name</label>

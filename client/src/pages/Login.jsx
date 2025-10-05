@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { useAuth } from '../store/auth.js';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,18 +11,18 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const { token, user } = await api('/auth/login', { method: 'POST', body: { email, password }, successMessage: 'Logged in successfully' });
+      const { token, user } = await api('/api/auth/login', { method: 'POST', body: { email, password }, successMessage: 'Logged in successfully' });
       login(user, token);
       navigate(`/${user.role}`);
     } catch (e) {
-      setError(e.message);
+      console.log(e);
+      toast.error(e.message);
     } finally {
       setLoading(false);
     }
@@ -34,7 +35,7 @@ export default function Login() {
         <div className="p-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome back</h1>
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Log in to access your dashboard.</p>
-          {error && <div className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</div>}
+          {/* {error && <div className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</div>} */}
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
             <div>
               <label className="label">Email</label>
