@@ -11,6 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ export default function Login() {
     } catch (e) {
       console.log(e);
       toast.error(e.message);
+      setError(e.message);
     } finally {
       setLoading(false);
     }

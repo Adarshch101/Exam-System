@@ -12,6 +12,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('student');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ export default function Signup() {
       console.log(e);
       console.log(e.message);
       toast.error(e.message);
+      setError(e.message);
     } finally {
       setLoading(false);
     }
