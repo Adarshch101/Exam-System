@@ -156,6 +156,7 @@ export async function initDb() {
   });
 
   db = pool;
+  return pool;
 }
 
 export { db };
