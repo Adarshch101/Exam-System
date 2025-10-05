@@ -11,63 +11,38 @@ import meRoutes from './routes/me.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 8080;
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:5175',
-  'http://localhost:8080',
-  'https://exam-system-omega.vercel.app',
-  'https://exam-system-y9fx.vercel.app',
-  process.env.CORS_ORIGIN
-].filter(Boolean);
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true); // allow server-to-server
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error(`CORS: ${origin} not allowed`), false);
-  },
-  credentials: true // ✅ if you want cookies / auth headers
-}));
-
+// CORS (adjust allowed origins if needed)
+app.use(cors({ origin: "*", credentials: false }));
 app.use(express.json());
 
 // Health check route
-app.get('/api/health', async (req, res) => {
+app.get("/api/health", async (req, res) => {
   try {
-    const client = (process.env.DB_CLIENT || 'sqlite').toLowerCase();
-    if (client === 'mysql') {
-      const [rows] = await db.query('SELECT 1 AS ok');
-      return res.json({ ok: rows?.[0]?.ok === 1, db: 'mysql' });
-    } else {
-      const row = await db.get('SELECT 1 AS ok');
-      return res.json({ ok: row?.ok === 1, db: 'sqlite' });
-    }
+    const [rows] = await db.query("SELECT 1 AS ok");
+    res.json({ ok: rows?.[0]?.ok === 1, db: "mysql" });
   } catch (err) {
-    console.error('Health check failed:', err);
-    return res.status(500).json({ ok: false, error: 'DB check failed' });
+    res.status(500).json({ ok: false, error: "DB check failed" });
   }
 });
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/exams', examRoutes);
-app.use('/api/submissions', submissionRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/me', meRoutes);
+// TODO: attach your routes here
+app.use("/api/auth", authRoutes);
+app.use("/api/exams", examRoutes);
+app.use("/api/submissions", submissionRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/me", meRoutes);
 
-// Initialize DB and start server
+
+
 initDb()
   .then(() => {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 API running on port ${PORT}`);
-    });
+    app.listen(PORT, "0.0.0.0", () =>
+      console.log(`🚀 API running on port ${PORT}`)
+    );
   })
   .catch((err) => {
-    console.error('❌ Failed to initialize DB', err);
+    console.error("❌ Failed to initialize DB", err);
     process.exit(1);
   });
-
-export { app, db };
