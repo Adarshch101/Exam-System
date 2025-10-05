@@ -11,7 +11,7 @@ import meRoutes from './routes/me.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 // CORS (adjust allowed origins if needed)
 app.use(cors({ origin: "*", credentials: false }));
