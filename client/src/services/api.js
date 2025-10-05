@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://exam-system-production-0c5c.up.railway.app';
+const API_URL = import.meta.env.VITE_API_URL || 'https://exam-system-production-f3e8.up.railway.app';
 
 export function authHeader() {
   const token = localStorage.getItem('token');
