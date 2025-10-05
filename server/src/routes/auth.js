@@ -7,6 +7,7 @@ const router = express.Router();
 // POST /api/auth/signup
 router.post('/signup', async (req, res) => {
   try {
+    console.log("im in signup");
     const { name, email, password, role } = req.body;
     if (!name || !email || !password || !role) return res.status(400).json({ error: 'Missing fields' });
     if (!['student', 'instructor', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
