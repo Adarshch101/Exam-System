@@ -12,11 +12,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const DB_PORT = process.env.DB_PORT;
 
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
+  'http://loaclhost:8080',
   'https://exam-system-omega.vercel.app',
   'https://exam-system-y9fx.vercel.app',
   process.env.CORS_ORIGIN // still allow single-origin override
@@ -57,7 +59,7 @@ app.use('/api/me', meRoutes);
 
 initDb()
   .then(() => {
-    app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`API running on http://localhost:${PORT} and db connected successfully on ${DB_PORT}`));
   })
   .catch((err) => {
     console.error('Failed to initialize DB', err);
