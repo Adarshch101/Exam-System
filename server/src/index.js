@@ -18,7 +18,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
-  'http://loaclhost:8080',
+  'http://localhost:8080',
   'https://exam-system-omega.vercel.app',
   'https://exam-system-y9fx.vercel.app',
   process.env.CORS_ORIGIN // still allow single-origin override

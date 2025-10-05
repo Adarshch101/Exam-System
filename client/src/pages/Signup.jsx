@@ -18,7 +18,7 @@ export default function Signup() {
     setError('');
     setLoading(true);
     try {
-      const { token, user } = await api('/auth/signup', { method: 'POST', body: { name, email, password, role }, successMessage: 'Account created successfully' });
+      const { token, user } = await api('/api/auth/signup', { method: 'POST', body: { name, email, password, role }, successMessage: 'Account created successfully' });
       login(user, token);
       navigate(`/${user.role}`);
     } catch (e) {
