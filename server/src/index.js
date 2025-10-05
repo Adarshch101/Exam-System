@@ -11,7 +11,7 @@ import meRoutes from './routes/me.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 const DB_PORT = process.env.DB_PORT;
 
 const allowedOrigins = [
