@@ -22,6 +22,8 @@ export default function Signup() {
       login(user, token);
       navigate(`/${user.role}`);
     } catch (e) {
+      console.log(e);
+      console.log(e.message);
       setError(e.message);
     } finally {
       setLoading(false);
