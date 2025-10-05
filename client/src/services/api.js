@@ -9,7 +9,8 @@ export function authHeader() {
 
 // api(path, { method, body, headers, successMessage, showErrorToast })
 export async function api(path, { method = 'GET', body, headers = {}, successMessage, showErrorToast = true } = {}) {
-  const res = await fetch(`${API_URL}${path}`, {
+  const fullPath = path.startsWith('/') ? path : `/${path}`;
+  const res = await fetch(`${API_URL}${fullPath}`, {
     method,
     headers: { 'Content-Type': 'application/json', ...authHeader(), ...headers },
     body: body ? JSON.stringify(body) : undefined,

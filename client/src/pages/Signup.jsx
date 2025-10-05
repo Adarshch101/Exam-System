@@ -59,7 +59,7 @@ export default function Signup() {
             </div>
             <div className="md:col-span-2">
               <label className="label">Role</label>
-              <select className="input" value={role} onChange={(e)=>setRole(e.target.value)}>
+              <select className="input" name='ROLE' value={role} onChange={(e)=>setRole(e.target.value)}>
                 <option value="student">Student</option>
                 <option value="instructor">Instructor</option>
                 <option value="admin">Admin</option>

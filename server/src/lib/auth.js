@@ -5,7 +5,7 @@ import { db } from './db.js';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me';
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecret_jwt_key_change_me';
 
 export function signToken(user) {
   const payload = { id: user.id, role: user.role, name: user.name, email: user.email };
