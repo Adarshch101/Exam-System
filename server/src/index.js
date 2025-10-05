@@ -27,6 +27,11 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+
+
 // TODO: attach your routes here
 app.use("/api/auth", authRoutes);
 app.use("/api/exams", examRoutes);
