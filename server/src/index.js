@@ -60,7 +60,7 @@ app.use('/api/me', meRoutes);
 
 initDb()
   .then(() => {
-    app.listen(PORT, () => console.log(`API running on http://localhost:${PORT} and db connected successfully on ${DB_PORT}`));
+    app.listen(PORT,"0.0.0.0", () => console.log(`API running on http://localhost:${PORT} and db connected successfully on ${DB_PORT}`));
   })
   .catch((err) => {
     console.error('Failed to initialize DB', err);
