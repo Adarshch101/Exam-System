@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { db, initDb } from './lib/db.js';
+import { db, initDb } from './lib/db.js';  // make sure db uses a pool for MySQL
 import authRoutes from './routes/auth.js';
 import examRoutes from './routes/exams.js';
 import submissionRoutes from './routes/submissions.js';
@@ -12,7 +12,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4001;
-const DB_PORT = process.env.DB_PORT;
 
 const allowedOrigins = [
   'http://localhost:5173',
@@ -21,21 +20,21 @@ const allowedOrigins = [
   'http://localhost:8080',
   'https://exam-system-omega.vercel.app',
   'https://exam-system-y9fx.vercel.app',
-  'https://exam-system-y9fx.vercel.app',
-  process.env.CORS_ORIGIN // still allow single-origin override
+  process.env.CORS_ORIGIN
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    // allow non-browser requests (no origin)
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // allow server-to-server
     if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error(`CORS: ${origin} not allowed`), false);
   },
-  credentials: false
+  credentials: true // ✅ if you want cookies / auth headers
 }));
+
 app.use(express.json());
 
+// Health check route
 app.get('/api/health', async (req, res) => {
   try {
     const client = (process.env.DB_CLIENT || 'sqlite').toLowerCase();
@@ -52,18 +51,22 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/me', meRoutes);
 
+// Initialize DB and start server
 initDb()
   .then(() => {
-    app.listen(PORT,"0.0.0.0", () => console.log(`API running on http://localhost:${PORT} and db connected successfully on ${DB_PORT}`));
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`🚀 API running on port ${PORT}`);
+    });
   })
   .catch((err) => {
-    console.error('Failed to initialize DB', err);
+    console.error('❌ Failed to initialize DB', err);
     process.exit(1);
   });
 
